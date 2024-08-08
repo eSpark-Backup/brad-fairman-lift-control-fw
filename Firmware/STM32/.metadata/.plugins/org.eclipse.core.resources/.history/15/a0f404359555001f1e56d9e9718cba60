@@ -1,0 +1,151 @@
+/*
+ * DRV8873.cpp
+ *
+ *  Created on: Aug 6, 2024
+ *      Author: Syed Farhan Ahmed
+ */
+#include <cstdlib>
+#include <stdio.h>
+#include <DRV8873.hpp>
+
+
+DRV8873::DRV8873(SPI_HandleTypeDef* spi, TIM_HandleTypeDef* tim, GPIO_Pins cs, uint32_t in1, uint32_t in2) {
+	_SPI_HANDLE = spi;
+	_TIM_HANDLE = tim;
+	_IN1 = in1;
+	_IN2 = in2;
+	_CS = cs;
+}
+
+/*
+ * Initializes DRV motor driver
+ * @returns: pointer to the status register
+ */
+uint8_t* DRV8873::Init(DRV8873_Mode_t mode) {
+
+	return &status;
+}
+
+void DRV8873::Extend(void) {
+	if (HAL_TIM_PWM_Stop(_TIM_HANDLE, _IN1) != HAL_OK) {
+	  // PWM Generation Error
+	  Error_Handler();
+	}
+	if (HAL_TIM_PWM_Start(_TIM_HANDLE, _IN2) != HAL_OK) {
+	  // PWM Generation Error
+	  Error_Handler();
+	}
+
+	SetPWMDutyCycle(_IN2, _TIM_HANDLE->Init.Period * 0.9);
+}
+
+void DRV8873::Retract(void) {
+	if (HAL_TIM_PWM_Stop(_TIM_HANDLE, _IN2) != HAL_OK) {
+	  // PWM Generation Error
+	  Error_Handler();
+	}
+	if (HAL_TIM_PWM_Start(_TIM_HANDLE, _IN1) != HAL_OK) {
+	  // PWM Generation Error
+	  Error_Handler();
+	}
+
+	SetPWMDutyCycle(_IN1, _TIM_HANDLE->Init.Period * 0.9);
+}
+
+/*
+ * for bringing motor to a smooth stop
+ * */
+void DRV8873::Halt(void) {
+	uint16_t IN1_CCR = __HAL_TIM_GET_COMPARE(_TIM_HANDLE, _IN1);
+	uint16_t IN2_CCR = __HAL_TIM_GET_COMPARE(_TIM_HANDLE, _IN2);
+
+	while(IN1_CCR || IN2_CCR) {
+		if(IN1_CCR) {
+			IN1_CCR /= 1.5;
+			SetPWMDutyCycle(_IN1, IN1_CCR);
+		}
+		if(IN2_CCR) {
+			IN2_CCR /= 1.5;
+			SetPWMDutyCycle(_IN2, IN2_CCR);
+		}
+	}
+
+	if ( (HAL_TIM_PWM_Stop(_TIM_HANDLE, _IN1) || HAL_TIM_PWM_Stop(_TIM_HANDLE, _IN2)) != HAL_OK) {
+	  // PWM Generation Error
+	  Error_Handler();
+	}
+}
+
+uint8_t DRV8873::Read_(uint8_t reg) {
+	HAL_StatusTypeDef errorcode;
+	uint8_t txData[1];
+	uint8_t rxData[2];
+
+    txData[0] = (reg << 1) | 0x40;  // Set MSB for read operation
+
+    Select_CS(DRV8873_SS_SELECT);
+//    HAL_Delay(1);
+	do
+	{
+		errorcode = HAL_SPI_Transmit(_SPI_HANDLE, txData, 1, HAL_MAX_DELAY);  // Transmit register address
+	}
+	while(errorcode != HAL_OK);
+	do
+	{
+		HAL_SPI_Receive(_SPI_HANDLE, rxData, 2, HAL_MAX_DELAY);   // Receive data
+	}
+	while(errorcode != HAL_OK);
+	Select_CS(DRV8873_SS_DESELECT);
+
+	return rxData[0];
+}
+
+DRV8873_Mode_t DRV8873::Write_(uint8_t reg, uint8_t data) {
+	HAL_StatusTypeDef errorcode;
+	uint8_t txData[2];
+	txData[0] = (reg << 1) & 0x3F;  // Clear MSB for write operation
+	txData[1] = data;
+
+
+	Select_CS(DRV8873_SS_SELECT);
+    HAL_Delay(1);
+//	do
+//	{
+		errorcode = HAL_SPI_Transmit(_SPI_HANDLE, &txData[0], 1, HAL_MAX_DELAY);  // Transmit register address and data
+//	}
+//	while(errorcode != HAL_OK);
+	if(errorcode != HAL_OK) {
+		Select_CS(DRV8873_SS_DESELECT);
+		return DRV8873_FAULT;
+	}
+//	do
+//	{
+		HAL_SPI_Transmit(_SPI_HANDLE, &txData[1], 1, HAL_MAX_DELAY);  // Transmit register address and data
+//	}
+//	while(errorcode != HAL_OK);
+	if(errorcode != HAL_OK) {
+		Select_CS(DRV8873_SS_DESELECT);
+		return DRV8873_FAULT;
+	}
+
+	Select_CS(DRV8873_SS_DESELECT);
+	return DRV8873_OK;
+}
+
+void DRV8873::Select_CS(DRV8873_Mode_t state) {
+	switch(state)
+	{
+	case DRV8873_SS_SELECT:
+	  HAL_GPIO_WritePin(_CS.port, _CS.pin, GPIO_PIN_RESET);
+	  break;
+	case DRV8873_SS_DESELECT:
+	  HAL_GPIO_WritePin(_CS.port, _CS.pin, GPIO_PIN_SET);
+	  break;
+	default:
+		break;
+	}
+}
+
+void DRV8873::SetPWMDutyCycle(uint32_t channel, uint16_t dutyCycle) {
+    __HAL_TIM_SET_COMPARE(_TIM_HANDLE, channel, dutyCycle);
+}

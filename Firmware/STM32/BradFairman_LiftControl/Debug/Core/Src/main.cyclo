@@ -1,0 +1,12 @@
+C:/Users/eSpark/Documents/GitHub/bradfairman-liftcontrol-fw/Firmware/STM32/BradFairman_LiftControl/mainApp/includes/mainApp.hpp:34:2:mainApp::~mainApp()	1
+../Core/Src/main.cpp:76:5:int main()	1
+../Core/Src/main.cpp:127:6:void SystemClock_Config()	3
+../Core/Src/main.cpp:173:13:void MX_I2C1_Init()	4
+../Core/Src/main.cpp:221:13:void MX_I2C2_Init()	4
+../Core/Src/main.cpp:269:13:void MX_SPI2_Init()	2
+../Core/Src/main.cpp:309:13:void MX_TIM3_Init()	9
+../Core/Src/main.cpp:385:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:515:6:void Error_Handler()	1
+../Core/Src/main.cpp:524:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Src/main.cpp:524:1:cpp)	1
+../Core/Src/main.cpp:524:1:cpp)	1

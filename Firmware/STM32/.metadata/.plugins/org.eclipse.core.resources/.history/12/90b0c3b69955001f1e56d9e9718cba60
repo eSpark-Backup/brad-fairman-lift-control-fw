@@ -1,0 +1,125 @@
+/*
+ * mainApp.cpp
+ *
+ *  Created on: Aug 6, 2024
+ *      Author: Syed Farhan Ahmed
+ */
+
+
+#include <mainApp.hpp>
+#include <DRV8873.hpp>
+#include <Presence_sensor.h>
+
+
+bool touch_flag;
+bool ir_flag;
+
+// MOTOR PINS
+GPIO_Pins Motor1_CS = {	.port = MOTOR1_CS_GPIO_Port,	.pin = MOTOR1_CS_Pin };
+GPIO_Pins Motor2_CS = {	.port = MOTOR2_CS_GPIO_Port,	.pin = MOTOR2_CS_Pin };
+GPIO_Pins Motor_SLEEP = {	.port = MOTOR_SLEEP_GPIO_Port,	.pin = MOTOR_SLEEP_Pin};
+GPIO_Pins Motor_DISABLE = {	.port = MOTOR_DISABLE_GPIO_Port,	.pin = MOTOR_DISABLE_Pin};
+
+GPIO_Pins tof_LEFT_XSHUT = {	.port = TOF_LEFT_XSHUT_GPIO_Port,	.pin = TOF_LEFT_XSHUT_Pin};
+GPIO_Pins tof_LEFT_GPIO = {	.port = TOF_LEFT_GPIO1_GPIO_Port,	.pin = TOF_LEFT_GPIO1_Pin};
+GPIO_Pins tof_RIGHT_XSHUT = {	.port = TOF_RIGHT_XSHUT_GPIO_Port,	.pin = TOF_RIGHT_XSHUT_Pin};
+GPIO_Pins tof_RIGHT_GPIO = {	.port = TOF_RIGHT_GPIO1_GPIO_Port,	.pin = TOF_RIGHT_GPIO1_Pin};
+GPIO_Pins tof_BOTTOM_XSHUT = {	.port = TOF_BOTTOM_XSHUT_GPIO_Port,	.pin = TOF_BOTTOM_XSHUT_Pin};
+GPIO_Pins tof_BOTTOM_GPIO = {	.port = TOF_BOTTOM_GPIO1_GPIO_Port,	.pin = TOF_BOTTOM_GPIO1_Pin};
+
+
+
+
+void mainApp::motor_control(motor_control_e state) {
+	switch(state) {
+	case MOTOR_OK:
+		HAL_GPIO_WritePin(Motor_SLEEP.port, Motor_SLEEP.pin, GPIO_PIN_SET);
+		break;
+	case MOTOR_SLEEP:
+		HAL_GPIO_WritePin(Motor_SLEEP.port, Motor_SLEEP.pin, GPIO_PIN_RESET);
+		break;
+	case MOTOR_ENABLE:
+		HAL_GPIO_WritePin(Motor_DISABLE.port, Motor_DISABLE.pin, GPIO_PIN_RESET);
+		break;
+	case MOTOR_DISABLE:
+		HAL_GPIO_WritePin(Motor_DISABLE.port, Motor_DISABLE.pin, GPIO_PIN_SET);
+		break;
+	default:
+		break;
+	}
+}
+
+mainApp::mainApp(SPI_HandleTypeDef* SPI_handle, I2C_HandleTypeDef* I2C1_handle, I2C_HandleTypeDef* I2C2_handle, TIM_HandleTypeDef* TIM_handle) {
+	_SPI_handle_ = SPI_handle;
+	_I2C_ADC_handle_ = I2C2_handle;
+	_I2C_SENSOR_handle_ = I2C1_handle;
+	_MOTOR_PWM_TIM_handle_ = TIM_handle;
+
+	MOTOR1_drv = new DRV8873(_SPI_handle_, _MOTOR_PWM_TIM_handle_, Motor1_CS, TIM_CHANNEL_4, TIM_CHANNEL_3);
+	MOTOR2_drv = new DRV8873(_SPI_handle_, _MOTOR_PWM_TIM_handle_, Motor2_CS, TIM_CHANNEL_2, TIM_CHANNEL_1);
+}
+
+void mainApp::initialize(void) {
+	motor1_status = MOTOR1_drv->Init(DRV8873_INITIALIZE);
+	motor2_status = MOTOR2_drv->Init(DRV8873_INITIALIZE);
+
+	Presence_Sensor_Init(_I2C_SENSOR_handle_);
+
+	motor_control(MOTOR_OK);
+	motor_control(MOTOR_ENABLE);
+
+	if (HAL_TIM_Base_Start_IT(_MOTOR_PWM_TIM_handle_) != HAL_OK) {
+	  // Timer start error
+	  Error_Handler();
+    }
+}
+
+void mainApp::loop(void) {
+
+	while(1) {
+//		HAL_GPIO_WritePin(MOTOR1_IN1_GPIO_Port, MOTOR1_IN1_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(MOTOR1_IN2_GPIO_Port, MOTOR1_IN2_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(MOTOR2_IN1_GPIO_Port, MOTOR2_IN1_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(MOTOR2_IN2_GPIO_Port, MOTOR2_IN2_Pin, GPIO_PIN_RESET);
+//		HAL_Delay(5000);
+//		HAL_GPIO_WritePin(MOTOR1_IN2_GPIO_Port, MOTOR1_IN2_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(MOTOR1_IN1_GPIO_Port, MOTOR1_IN1_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(MOTOR2_IN2_GPIO_Port, MOTOR2_IN2_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(MOTOR2_IN1_GPIO_Port, MOTOR2_IN1_Pin, GPIO_PIN_RESET);
+//		HAL_Delay(5000);
+		MOTOR1_drv->Extend();
+		HAL_Delay(2000);
+		MOTOR1_drv->Retract();
+		HAL_Delay(2000);
+		MOTOR2_drv->Extend();
+		HAL_Delay(2000);
+		MOTOR2_drv->Retract();
+		HAL_Delay(2000);
+	}
+}
+
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin) {
+	switch(GPIO_Pin) {
+	case TOUCH_SENSOR_Pin:			// Active high
+		touch_flag = true;
+		break;
+	case IR_FEEDBACK_SENSOR_Pin:			// Active low
+		ir_flag = false;
+		break;
+	default:
+		break;
+	}
+}
+
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
+	switch(GPIO_Pin) {
+	case TOUCH_SENSOR_Pin:			// Active high
+		touch_flag = false;
+		break;
+	case IR_FEEDBACK_SENSOR_Pin:			// Active low
+		ir_flag = true;
+		break;
+	default:
+		break;
+	}
+}

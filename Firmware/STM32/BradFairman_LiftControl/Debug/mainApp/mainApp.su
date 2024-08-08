@@ -1,0 +1,6 @@
+../mainApp/mainApp.cpp:33:6:void mainApp::motor_control(motor_control_e)	16	static
+../mainApp/mainApp.cpp:52:1:mainApp::mainApp(SPI_HandleTypeDef*, I2C_HandleTypeDef*, I2C_HandleTypeDef*, TIM_HandleTypeDef*)	48	static
+../mainApp/mainApp.cpp:62:6:void mainApp::initialize()	16	static
+../mainApp/mainApp.cpp:77:6:void mainApp::loop()	16	static
+../mainApp/mainApp.cpp:101:6:void HAL_GPIO_EXTI_Rising_Callback(uint16_t)	16	static
+../mainApp/mainApp.cpp:114:6:void HAL_GPIO_EXTI_Falling_Callback(uint16_t)	16	static

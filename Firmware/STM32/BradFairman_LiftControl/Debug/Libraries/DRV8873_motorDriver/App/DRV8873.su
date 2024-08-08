@@ -1,0 +1,9 @@
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:12:1:DRV8873::DRV8873(SPI_HandleTypeDef*, TIM_HandleTypeDef*, GPIO_Pins, uint32_t, uint32_t)	24	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:24:10:uint8_t* DRV8873::Init(DRV8873_Mode_t)	16	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:29:6:void DRV8873::Extend()	24	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:42:6:void DRV8873::Retract()	24	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:58:6:void DRV8873::Halt()	32	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:79:9:uint8_t DRV8873::Read_(uint8_t)	32	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:103:16:DRV8873_Mode_t DRV8873::Write_(uint8_t, uint8_t)	40	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:135:6:void DRV8873::Select_CS(DRV8873_Mode_t)	16	static
+../Libraries/DRV8873_motorDriver/App/DRV8873.cpp:149:6:void DRV8873::SetPWMDutyCycle(uint32_t, uint16_t)	24	static
