@@ -57,6 +57,10 @@ mainApp::mainApp(SPI_HandleTypeDef* SPI_handle, I2C_HandleTypeDef* I2C1_handle, 
 
 	MOTOR1_drv = new DRV8873(_SPI_handle_, _MOTOR_PWM_TIM_handle_, Motor1_CS, TIM_CHANNEL_4, TIM_CHANNEL_3);
 	MOTOR2_drv = new DRV8873(_SPI_handle_, _MOTOR_PWM_TIM_handle_, Motor2_CS, TIM_CHANNEL_2, TIM_CHANNEL_1);
+
+	TOF_left_sensor = new VL53L4CD(_I2C_SENSOR_handle_, tof_LEFT_XSHUT, tof_LEFT_GPIO);
+	TOF_right_sensor = new VL53L4CD(_I2C_SENSOR_handle_, tof_RIGHT_XSHUT, tof_RIGHT_GPIO);
+	TOF_bottom_sensor = new VL53L4CD(_I2C_SENSOR_handle_, tof_BOTTOM_XSHUT, tof_BOTTOM_GPIO);
 }
 
 void mainApp::initialize(void) {

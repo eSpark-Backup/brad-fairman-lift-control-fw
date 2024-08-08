@@ -1,0 +1,9 @@
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:52:9:uint8_t VL53L4CD::VL53L4CD_RdDWord(uint16_t, uint16_t, uint32_t*)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:64:9:uint8_t VL53L4CD::VL53L4CD_RdWord(uint16_t, uint16_t, uint16_t*)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:76:9:uint8_t VL53L4CD::VL53L4CD_RdByte(uint16_t, uint16_t, uint8_t*)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:83:9:uint8_t VL53L4CD::VL53L4CD_WrByte(uint16_t, uint16_t, uint8_t)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:90:9:uint8_t VL53L4CD::VL53L4CD_WrWord(uint16_t, uint16_t, uint16_t)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:101:9:uint8_t VL53L4CD::VL53L4CD_WrDWord(uint16_t, uint16_t, uint32_t)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:114:6:void VL53L4CD::WaitMs(uint32_t)	16	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:119:9:uint8_t VL53L4CD::VL53L4CD_I2CRead(uint8_t, uint16_t, uint8_t*, uint32_t)	56	static
+../Libraries/VL53L4CD_tofSensor/Driver/platform.cpp:180:9:uint8_t VL53L4CD::VL53L4CD_I2CWrite(uint8_t, uint16_t, uint8_t*, uint32_t)	56	static

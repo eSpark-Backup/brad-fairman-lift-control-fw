@@ -10,6 +10,8 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include mainApp/subdir.mk
+-include Libraries/VL53L4CD_tofSensor/Driver/subdir.mk
+-include Libraries/VL53L4CD_tofSensor/App/subdir.mk
 -include Libraries/STHS34PF80_presenceSensor/Driver/subdir.mk
 -include Libraries/STHS34PF80_presenceSensor/App/subdir.mk
 -include Libraries/DRV8873_motorDriver/App/subdir.mk

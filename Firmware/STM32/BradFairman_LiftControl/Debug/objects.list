@@ -27,4 +27,8 @@
 "./Libraries/DRV8873_motorDriver/App/DRV8873.o"
 "./Libraries/STHS34PF80_presenceSensor/App/Presence_sensor.o"
 "./Libraries/STHS34PF80_presenceSensor/Driver/sths34pf80_reg.o"
+"./Libraries/VL53L4CD_tofSensor/App/tofSensorApp.o"
+"./Libraries/VL53L4CD_tofSensor/Driver/platform.o"
+"./Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.o"
+"./Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_calibration.o"
 "./mainApp/mainApp.o"

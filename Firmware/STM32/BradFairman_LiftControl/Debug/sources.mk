@@ -44,5 +44,7 @@ Drivers/STM32G0xx_HAL_Driver/Src \
 Libraries/DRV8873_motorDriver/App \
 Libraries/STHS34PF80_presenceSensor/App \
 Libraries/STHS34PF80_presenceSensor/Driver \
+Libraries/VL53L4CD_tofSensor/App \
+Libraries/VL53L4CD_tofSensor/Driver \
 mainApp \
 

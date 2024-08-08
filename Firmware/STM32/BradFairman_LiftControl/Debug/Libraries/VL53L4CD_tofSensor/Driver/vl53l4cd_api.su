@@ -1,0 +1,22 @@
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:149:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetSWVersion(VL53L4CD_Version_t*)	24	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:161:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetI2CAddress(uint8_t)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:173:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetSensorId(uint16_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:182:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SensorInit()	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:241:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_ClearInterrupt()	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:249:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_StartRanging()	40	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:285:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_StopRanging()	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:293:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_CheckForDataReady(uint8_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:321:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetRangeTiming(uint32_t, uint32_t)	72	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:401:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetRangeTiming(uint32_t*, uint32_t*)	72	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:454:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetResult(VL53L4CD_Result_t*)	64	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:501:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetOffset(int16_t)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:515:17:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetOffset(int16_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:534:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetXtalk(uint16_t)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:550:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetXtalk(uint16_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:562:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetDetectionThresholds(uint16_t, uint16_t, uint8_t)	48	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:575:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetDetectionThresholds(uint16_t*, uint16_t*, uint8_t*)	40	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:590:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetSignalThreshold(uint16_t)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:600:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetSignalThreshold(uint16_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:613:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_SetSigmaThreshold(uint16_t)	24	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:628:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_GetSigmaThreshold(uint16_t*)	32	static
+../Libraries/VL53L4CD_tofSensor/Driver/vl53l4cd_api.cpp:640:16:VL53L4CD_ERROR VL53L4CD::VL53L4CD_StartTemperatureUpdate()	32	static

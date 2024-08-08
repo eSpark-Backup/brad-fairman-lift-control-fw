@@ -11,6 +11,7 @@
 #include "main.h"
 #include <cstdlib>
 #include <DRV8873.hpp>
+#include <vl53l4cd_class.h>
 
 //extern GPIO_Pins Motor1_CS, Motor2_CS;
 typedef enum {
@@ -48,6 +49,9 @@ private:
 
 	DRV8873* MOTOR1_drv = NULL;
 	DRV8873* MOTOR2_drv = NULL;
+	VL53L4CD* TOF_left_sensor = NULL;//(&DEV_I2C, A1);
+	VL53L4CD* TOF_right_sensor = NULL;//(&DEV_I2C, A1);
+	VL53L4CD* TOF_bottom_sensor = NULL;//(&DEV_I2C, A1);
 
 	uint8_t* motor1_status = NULL;
 	uint8_t* motor2_status = NULL;
